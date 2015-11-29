@@ -1,0 +1,54 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/median/
+中位数
+
+给定一个未排序的整数数组，找到其中位数。
+
+中位数是排序后数组的中间值，如果数组的个数是偶数个，则返回排序后数组的第N/2个数。
+
+您在真实的面试中是否遇到过这个题？ Yes
+样例
+给出数组[4, 5, 1, 2, 3]， 返回 3
+
+给出数组[7, 9, 4, 5]，返回 5
+
+挑战
+时间复杂度为O(n)
+
+class Solution {
+public:
+    /**
+     * @param nums: A list of integers.
+     * @return: An integer denotes the middle number of the array.
+     */
+     
+   int partition(vector<int> &nums, int ld, int rd){
+        int pivot = nums[ld];
+        while(ld<rd){
+            while(nums[rd]>=pivot && ld<rd) --rd;
+            nums[ld] = nums[rd];
+            while(nums[ld]<=pivot && ld<rd) ++ld;
+            nums[rd] = nums[ld];
+        }
+        nums[ld] = pivot;
+        return ld;
+    }
+    int median(vector<int> &nums) {
+        //直接利用快排
+        // sort(nums.begin(), nums.end());
+        // return nums[(nums.size()-1)/2];
+        
+        //利用快排的思想
+        int pivot = nums[0];
+        int pos = (nums.size()-1)/2;
+        int ld = 0, rd = nums.size()-1;
+        while(true){
+            int p = partition(nums, ld, rd);
+            if(p == pos)
+                return nums[p];
+            else if(p<pos) ld = p+1;
+            else rd = p-1;
+        }
+        return -1;
+    }
+};
+
