@@ -1,0 +1,73 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/binary-tree-inorder-traversal/
+二叉树的中序遍历 查看运行结果 
+
+给出一棵二叉树,返回其中序遍历
+
+样例
+给出二叉树 {1,#,2,3},
+
+   1
+    \
+     2
+    /
+   3
+返回 [1,3,2].
+
+挑战
+你能使用非递归算法来实现么?
+
+标签 Expand  
+
+/**
+ * Definition of TreeNode:
+ * class TreeNode {
+ * public:
+ *     int val;
+ *     TreeNode *left, *right;
+ *     TreeNode(int val) {
+ *         this->val = val;
+ *         this->left = this->right = NULL;
+ *     }
+ * }
+ */
+class Solution {
+    /**
+     * @param root: The root of binary tree.
+     * @return: Inorder in vector which contains node values.
+     */
+public:
+    //递归实现中序遍历
+    void inorder(TreeNode *p, vector<int> &v){
+        if(p){
+            inorder(p->left, v);
+            v.push_back(p->val);
+            inorder(p->right, v);
+        }
+    }
+    vector<int> inorderTraversal(TreeNode *root) {
+       vector<int> v;
+       //递归
+       //inorder(root, v);
+       
+       //非递归
+       stack<TreeNode*> s;
+       if(root){
+            TreeNode *cur;
+            s.push(cur=root);
+            while(!s.empty()){
+                while(cur){
+                    s.push(cur->left);
+                    cur = cur->left;
+                }
+                s.pop();//清除空指针
+                if(!s.empty()){
+                    cur = s.top();
+                    s.pop();
+                    v.push_back(cur->val);
+                    s.push(cur=cur->right);
+                }
+            }
+       }
+       return v;
+    }
+};
