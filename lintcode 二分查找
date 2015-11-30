@@ -1,0 +1,31 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/first-position-of-target/
+二分查找 查看运行结果 
+
+给定一个排序的整数数组（升序）和一个要查找的整数target，用O(logn)的时间查找到target第一次出现的下标（从0开始），如果target不存在于数组中，返回-1。
+
+样例
+在数组 [1, 2, 3, 3, 4, 5, 10] 中二分查找3，返回2。
+
+挑战
+如果数组中的整数个数超过了2^32，你的算法是否会出错？
+
+class Solution {
+public:
+    /**
+     * @param nums: The integer array.
+     * @param target: Target number to find.
+     * @return: The first position of target. Position starts from 0. 
+     */
+    int binarySearch(vector<int> &array, int target) {
+        int ld=0, rd=array.size()-1;
+        while(ld<=rd){
+            int mid = (ld+rd)>>1;
+            if(array[mid] < target)
+                ld = mid+1;
+            else
+                rd = mid-1;
+        }
+        if(rd+1<array.size() && array[rd+1]==target) return rd+1;
+        return -1;
+    }
+};
