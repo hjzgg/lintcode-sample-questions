@@ -1,0 +1,70 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/binary-tree-postorder-traversal/
+二叉树的后序遍历 查看运行结果 
+
+给出一棵二叉树，返回其节点值的后序遍历。
+
+样例
+给出一棵二叉树 {1,#,2,3},
+
+   1
+    \
+     2
+    /
+   3
+返回 [3,2,1]
+
+挑战
+你能使用非递归实现么？
+
+/**
+ * Definition of TreeNode:
+ * class TreeNode {
+ * public:
+ *     int val;
+ *     TreeNode *left, *right;
+ *     TreeNode(int val) {
+ *         this->val = val;
+ *         this->left = this->right = NULL;
+ *     }
+ * }
+ */
+class Solution {
+    /**
+     * @param root: The root of binary tree.
+     * @return: Postorder in vector which contains node values.
+     */
+public:
+    void postorder(TreeNode* root, vector<int> &v){
+        if(root){
+            postorder(root->left, v);
+            postorder(root->right, v);
+            v.push_back(root->val);
+        }
+    }
+    vector<int> postorderTraversal(TreeNode *root) {
+        // write your code here
+        vector<int> v;
+        //递归
+        //postorder(root, v);
+        
+        stack<TreeNode *> s;
+        if(root){
+            TreeNode* cur=root, *pre=NULL;
+            s.push(cur);
+            while(!s.empty()){
+                cur = s.top();
+                if((!cur->left && !cur->right) || (pre!=NULL && (cur->left==pre || cur->right==pre))){
+                    v.push_back(cur->val);
+                    pre = cur;
+                    s.pop();
+                } else {
+                    if(cur->right)
+                        s.push(cur->right);
+                    if(cur->left)
+                        s.push(cur->left);
+                }
+            }
+        }
+        return v;
+    }
+};
