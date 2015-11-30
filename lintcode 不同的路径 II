@@ -1,0 +1,54 @@
+不同的路径 II 查看运行结果 
+
+"不同的路径" 的跟进问题：
+
+现在考虑网格中有障碍物，那样将会有多少条不同的路径？
+
+网格中的障碍和空位置分别用 1 和 0 来表示。
+
+样例
+如下所示在3x3的网格中有一个障碍物：
+
+[
+  [0,0,0],
+  [0,1,0],
+  [0,0,0]
+]
+一共有2条不同的路径从左上角到右下角。
+
+注意
+m 和 n 均不超过100
+
+class Solution {
+public:
+    /**
+     * @param obstacleGrid: A list of lists of integers
+     * @return: An integer
+     */ 
+    int uniquePathsWithObstacles(vector<vector<int> > &g) {
+        // write your code here
+        int n = g.size();
+        if(n == 0) return 0;
+        int m = g[0].size();
+        int dp[n][m];
+        memset(dp, 0, sizeof(dp));
+
+        //初始化第一行为1， 遇到障碍物停止
+        for(int i=0; i<n; ++i){
+            if(g[i][0]) break;
+            dp[i][0] = 1;
+        }
+        //初始化第一列为1， 遇到障碍物停止
+        for(int i=0; i<m; ++i){
+            if(g[0][i]) break;
+            dp[0][i] = 1;
+        }
+        
+        for(int i=1; i<n; ++i)
+            for(int j=1; j<m; ++j)
+                if(!g[i][j]) 
+                    dp[i][j] = dp[i-1][j]+dp[i][j-1];
+                    
+        return dp[n-1][m-1];
+    }
+};
