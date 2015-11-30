@@ -1,0 +1,74 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/binary-tree-preorder-traversal/
+二叉树的前序遍历 查看运行结果 
+
+给出一棵二叉树，返回其节点值的前序遍历。
+
+样例
+给出一棵二叉树 {1,#,2,3},
+
+   1
+    \
+     2
+    /
+   3
+ 返回 [1,2,3].
+
+挑战
+你能使用非递归实现么？
+/**
+ * Definition of TreeNode:
+ * class TreeNode {
+ * public:
+ *     int val;
+ *     TreeNode *left, *right;
+ *     TreeNode(int val) {
+ *         this->val = val;
+ *         this->left = this->right = NULL;
+ *     }
+ * }
+ */
+
+class Solution {
+public:
+    /**
+     * @param root: The root of binary tree.
+     * @return: Preorder in vector which contains node values.
+     */
+     
+    void preorder(TreeNode* root, vector<int> &v){
+        if(root){
+            v.push_back(root->val);
+            preorder(root->left, v);
+            preorder(root->right, v);
+        }
+    }
+    vector<int> preorderTraversal(TreeNode *root) {
+        // write your code here
+        vector<int> v;
+        //递归
+        //preorder(root, v);
+        
+        //非递归
+        stack<TreeNode*>s;
+        if(root){
+            TreeNode* cur = root;
+            s.push(cur);
+            while(!s.empty()){
+                while(cur){
+                    v.push_back(cur->val);
+                    s.push(cur->left);
+                    cur=cur->left;
+                }
+                s.pop();
+                
+                if(!s.empty()){
+                    cur = s.top();
+                    s.pop();
+                    s.push(cur=cur->right);
+                }
+            }
+        }
+        return v;
+    }
+};
+
