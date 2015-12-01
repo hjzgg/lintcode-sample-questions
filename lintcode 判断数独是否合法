@@ -1,0 +1,63 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/valid-sudoku/
+判断数独是否合法 查看运行结果 
+
+请判定一个数独是否有效。
+
+该数独可能只填充了部分数字，其中缺少的数字用 . 表示。
+
+样例
+下列就是一个合法数独的样例。
+
+Valid Sudoku
+
+注意
+一个合法的数独（仅部分填充）并不一定是可解的。我们仅需使填充的空格有效即可。
+
+说明
+什么是 数独？
+
+http://sudoku.com.au/TheRules.aspx
+http://baike.baidu.com/subview/961/10842669.htm
+
+class Solution {
+public:
+    /**
+      * @param board: the board
+      * @return: wether the Sudoku is valid
+      */
+    bool isValidSudoku(const vector<vector<char>>& board) {
+        bool vis[10];
+        //检查每一行
+        for(int i=0; i<9; ++i){
+            memset(vis, 0, sizeof(vis));
+            for(int j=0; j<9; ++j){
+                if(isdigit(board[i][j])){
+                    if(vis[board[i][j]-'0']) return false;
+                    vis[board[i][j]-'0'] = true;
+                }
+            }
+        }
+        //检查每一列
+        for(int j=0; j<9; ++j){
+            memset(vis, 0, sizeof(vis));
+            for(int i=0; i<9; ++i){
+                if(isdigit(board[i][j])){
+                    if(vis[board[i][j]-'0']) return false;
+                    vis[board[i][j]-'0'] = true;
+                }
+            }
+        }
+        //检查每一个3*3正方形
+        for(int k=0; k<9; ++k){
+            memset(vis, 0, sizeof(vis));
+            for(int i=k/3*3; i<k/3*3+3; ++i)
+                for(int j=k%3*3; j<k%3*3+3; ++j){
+                    if(isdigit(board[i][j])){
+                        if(vis[board[i][j]-'0']) return false;
+                        vis[board[i][j]-'0'] = true;
+                    }
+                }
+        }
+        return true;
+    }
+};
