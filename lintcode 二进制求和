@@ -1,0 +1,46 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/add-binary/
+二进制求和 查看运行结果 
+
+给定两个二进制字符串，返回他们的和（用二进制表示）。
+
+样例
+a = 11
+
+b = 1
+
+返回 100
+
+class Solution {
+public:
+    /**
+     * @param a a number
+     * @param b a number
+     * @return the result
+     */
+    string addBinary(string& a, string& b) {
+        string c;
+        if(a.size() < b.size())
+            swap(a, b);
+        int i, j;
+        int carry = 0;
+        for(i=b.size()-1, j=a.size()-1; i>=0; --i, --j){
+            int val = a[j]-'0' + b[i]-'0' + carry;
+            carry = val/2;
+            val = val%2;
+            c.append(1, val+'0');
+        }
+        
+        for(j; j>=0; --j){
+            int val = a[j]-'0' + carry;
+            carry = val/2;
+            val = val%2;
+            c.append(1, val+'0');
+        }
+        
+        if(carry)
+            c.append(1, carry+'0');
+        reverse(c.begin(), c.end());
+        return c;
+    }
+};
+
