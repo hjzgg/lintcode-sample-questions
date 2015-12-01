@@ -1,3 +1,4 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/flatten-binary-tree-to-linked-list/
 Flatten Binary Tree to Linked List
 
 Flatten a binary tree to a fake "linked list" in pre-order traversal.
