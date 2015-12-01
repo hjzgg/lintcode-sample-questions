@@ -1,0 +1,39 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/cosine-similarity/
+Cosine Similarity
+
+Cosine similarity is a measure of similarity between two vectors of an inner product space that measures the cosine of the angle between them. The cosine of 0° is 1, and it is less than 1 for any other angle.
+
+See wiki: Cosine Similarity
+
+Here is the formula:
+
+/media/problem/cosine-similarity.png
+
+Given two vectors A and B with the same size, calculate the cosine similarity.
+
+Return 2.0000 if cosine similarity is invalid (for example A = [0] and B = [0]).
+
+
+class Solution {
+public:
+    /**
+     * @param A: An integer array.
+     * @param B: An integer array.
+     * @return: Cosine similarity.
+     */
+    double cosineSimilarity(vector<int> A, vector<int> B) {
+    	double top = 0.0;
+    	for(int i=0; i<A.size(); ++i)
+    		top += A[i]*B[i];
+    	double down, downl, downr;
+    	downl = downr = 0.0;
+    	for(int i=0; i<A.size(); ++i)
+    		downl += A[i]*A[i];
+		for(int i=0; i<B.size(); ++i)
+    		downr += B[i]*B[i];
+    	down = sqrt(downl) * sqrt(downr);
+    	if(down < 1e-16) return 2.0000;
+    	return top/down;
+    }
+};
+
