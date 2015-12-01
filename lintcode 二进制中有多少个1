@@ -1,0 +1,39 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/count-1-in-binary/
+二进制中有多少个1 查看运行结果 
+
+计算在一个 32 位的整数的二进制表式中有多少个 1.
+
+样例
+给定 32 (100000)，返回 1
+
+给定 5 (101)，返回 2
+
+给定 1023 (111111111)，返回 9
+
+class Solution {
+public:
+    /**
+     * @param num: an integer
+     * @return: an integer, the number of ones in num
+     */
+    int countOnes(int num) {
+        int cntOnes = 0;
+        
+        //利用二进制的位运算
+        // int sf = 0;
+        // while(num){
+        //     if(num&1) ++cntOnes;
+        //     ++sf;
+        //     if(sf>31) break;//一共32位
+        //     num>>=1;
+        // }
+        
+        // num = num&(num-1), 直到num为0
+        while(num){
+            num = num&(num-1);
+            ++cntOnes;
+        }
+        return cntOnes;
+    }
+};
+
