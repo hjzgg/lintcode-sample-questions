@@ -1,0 +1,41 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/swap-nodes-in-pairs/
+Swap Nodes in Pairs
+
+Given a linked list, swap every two adjacent nodes and return its head.
+样例
+Given 1->2->3->4, you should return the list as 2->1->4->3.
+
+挑战
+Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    /**
+     * @param head a ListNode
+     * @return a ListNode
+     */
+    ListNode* swapPairs(ListNode* head) {
+        ListNode *p = head, *q = p->next, *pre = NULL;
+     	head = NULL;
+     	while(p && q){
+     		p->next = q->next;
+     		q->next = p;
+     		if(pre) pre->next = q;
+     		pre = p;
+     		if(head == NULL) head = q;
+			p = p->next;
+			if(p)
+			    q = p->next;
+     	}
+     	if(head == NULL) head = p;
+     	return head;
+    }
+};
