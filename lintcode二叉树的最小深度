@@ -1,0 +1,52 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/minimum-depth-of-binary-tree/
+二叉树的最小深度 查看运行结果 
+
+给定一个二叉树，找出其最小深度。
+
+二叉树的最小深度为根节点到最近叶子节点的距离。
+
+样例
+给出一棵如下的二叉树:
+
+        1
+
+     /     \ 
+
+   2       3
+
+          /    \
+
+        4      5  
+
+这个二叉树的最小深度为 2
+
+/**
+ * Definition of TreeNode:
+ * class TreeNode {
+ * public:
+ *     int val;
+ *     TreeNode *left, *right;
+ *     TreeNode(int val) {
+ *         this->val = val;
+ *         this->left = this->right = NULL;
+ *     }
+ * }
+ */
+class Solution {
+public:
+    /**
+     * @param root: The root of binary tree.
+     * @return: An integer
+     */
+    int minDepth(TreeNode *root) {
+        if(!root) return 0;
+        int ld = minDepth(root->left);
+        int rd = minDepth(root->right);
+        if(ld==0 && rd==0) return 1;
+        else if(ld==0)
+            return 1+rd;
+        else if(rd==0)
+            return 1+ld;
+        else return min(ld, rd)+1;
+    }
+};
