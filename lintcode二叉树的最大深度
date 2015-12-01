@@ -1,0 +1,41 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/maximum-depth-of-binary-tree/
+二叉树的最大深度 查看运行结果 
+
+给定一个二叉树，找出其最大深度。
+
+二叉树的深度为根节点到最远叶子节点的距离。
+
+样例
+给出一棵如下的二叉树:
+
+  1
+ / \ 
+2   3
+   / \
+  4   5
+这个二叉树的最大深度为3.
+
+/**
+ * Definition of TreeNode:
+ * class TreeNode {
+ * public:
+ *     int val;
+ *     TreeNode *left, *right;
+ *     TreeNode(int val) {
+ *         this->val = val;
+ *         this->left = this->right = NULL;
+ *     }
+ * }
+ */
+class Solution {
+public:
+    /**
+     * @param root: The root of binary tree.
+     * @return: An integer
+     */
+     
+    int maxDepth(TreeNode *root) {
+        if(!root) return 0;
+        return max(maxDepth(root->left), maxDepth(root->right)) + 1;
+    }
+};
