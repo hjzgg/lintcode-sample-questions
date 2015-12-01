@@ -1,0 +1,40 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/remove-linked-list-elements/
+Remove Linked List Elements
+
+Remove all elements from a linked list of integers that have value val.
+
+样例
+Given 1->2->3->3->4->5->3, val = 3, you should return the list as 1->2->4->5
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    /**
+     * @param head a ListNode
+     * @param val an integer
+     * @return a ListNode
+     */
+    ListNode *removeElements(ListNode *head, int val) {
+        ListNode *pre = NULL, *p = head, *q;
+    	while(p != NULL){
+    		q = p->next;
+    		if(p->val == val){
+    			if(pre == NULL)
+    				head = head->next;
+    			else {
+    				pre->next = p->next;
+    			}
+    		} else pre=p;
+    		p = q;
+    	}
+    	return head;
+    }
+};
+
