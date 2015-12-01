@@ -1,0 +1,36 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/remove-duplicates-from-sorted-array-ii/
+删除排序数组中的重复数字 II 查看运行结果 
+
+跟进“删除重复数字”：
+
+如果可以允许出现两次重复将如何处理？
+
+样例
+给出数组A =[1,1,1,2,2,3]，你的函数应该返回长度5，此时A=[1,1,2,2,3]。
+
+class Solution {
+public:
+    /**
+     * @param A: a list of integers
+     * @return : return an integer
+     */
+    int removeDuplicates(vector<int> &nums) {
+        if(nums.size()==0) return 0;
+        int i=0, j=1;
+        bool flag = true;
+        while(j<nums.size()){
+            if(flag && nums[j]==nums[i]){//遇到第一个重复的直接加进去
+                flag = false;
+                nums[++i] = nums[j];
+            } else {
+                while(j<nums.size() && nums[j]==nums[i])//否则多余的重复的去掉
+                    ++j;
+                if(j>=nums.size()) break;//如果没有找到和当前数字不重复的直接退出
+                flag = true;
+                nums[++i] = nums[j];
+            }
+            ++j;
+        }
+        return i+1;
+    }
+};
