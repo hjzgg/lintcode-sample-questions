@@ -1,0 +1,51 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/merge-sorted-array-ii/
+合并排序数组 查看运行结果 
+
+合并两个排序的整数数组A和B变成一个新的数组。
+
+样例
+给出A=[1,2,3,4]，B=[2,4,5,6]，返回 [1,2,2,3,4,4,5,6]
+
+挑战
+你能否优化你的算法，如果其中一个数组很大而另一个数组很小？
+
+class Solution {
+public:
+    /**
+     * @param A and B: sorted integer array A and B.
+     * @return: A new sorted integer array
+     */
+    vector<int> mergeSortedArray(vector<int> &A, vector<int> &B) {
+        // write your code here
+        
+        //new 一个新的数组进行存储
+        // vector<int> C;
+        // int i=0, j=0;
+        // while(i<A.size() && j<B.size()){
+        //     if(A[i]<B[j]) {
+        //         C.push_back(A[i]);
+        //         ++i;
+        //     } else {
+        //         C.push_back(B[j]);
+        //         ++j;
+        //     }
+        // }
+        
+        // while(i<A.size()){
+        //     C.push_back(A[i]);
+        //     ++i;
+        // }
+        // while(j<B.size()){
+        //     C.push_back(B[j]);
+        //     ++j;
+        // }
+        // return C;
+        
+        //小的数组 插入到 大的数组里面去
+        if(A.size() < B.size())
+            swap(A, B);
+        for(int i=0; i<B.size(); ++i)
+            A.insert(lower_bound(A.begin(), A.end(), B[i]), B[i]);
+        return A;
+    }
+};
