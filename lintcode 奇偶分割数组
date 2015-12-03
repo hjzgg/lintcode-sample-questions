@@ -1,0 +1,28 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/partition-array-by-odd-and-even/
+奇偶分割数组 查看运行结果 
+
+分割一个整数数组，使得奇数在前偶数在后。
+
+您在真实的面试中是否遇到过这个题？ Yes
+样例
+给定 [1, 2, 3, 4]，返回 [1, 3, 2, 4]。
+
+挑战
+在原数组中完成，不使用额外空间。
+
+class Solution {
+public:
+    /**
+     * @param nums: a vector of integers
+     * @return: nothing
+     */
+    void partitionArray(vector<int> &nums) {
+        // write your code here
+        int ld=0, rd=nums.size()-1;
+        while(ld < rd){
+            while(ld<rd && nums[ld]%2) ++ld;
+            while(ld<rd && !(nums[rd]%2)) --rd;
+            swap(nums[ld], nums[rd]);
+        }
+    }
+};
