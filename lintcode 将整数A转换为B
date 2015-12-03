@@ -1,0 +1,51 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/flip-bits/
+将整数A转换为B 查看运行结果 
+
+如果要将整数A转换为B，需要改变多少个bit位？
+
+样例
+如把31转换为14，需要改变2个bit位。
+
+(31)10=(11111)2
+
+(14)10=(01110)2
+
+挑战
+你能想出几种方法？
+
+注意下算符优先级
+7
+==
+等于
+表达式==表达式
+左到右
+双目运算符
+!=
+不等于
+表达式!= 表达式
+双目运算符
+
+8
+&
+按位与
+整型表达式&整型表达式
+左到右
+双目运算符
+
+class Solution {
+public:
+    /**
+     *@param a, b: Two integer
+     *return: An integer
+     */
+    int bitSwapRequired(int a, int b) {
+        // write your code here
+        int sf = 0;
+        int ans = 0;
+        while(sf<32){
+            if(((a>>sf)&1) != ((b>>sf)&1)) ++ans;
+            ++sf;
+        }
+        return ans;
+    }
+};
