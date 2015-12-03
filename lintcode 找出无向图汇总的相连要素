@@ -1,0 +1,55 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/find-the-connected-component-in-the-undirected-graph/
+找出无向图汇总的相连要素 查看运行结果 
+
+请找出无向图中相连要素的个数。
+
+图中的每个节点包含其邻居的 1 个标签和 1 个列表。（一个无向图的相连节点（或节点）是一个子图，其中任意两个顶点通过路径相连，且不与超级图中的其它顶点相连。）
+
+您在真实的面试中是否遇到过这个题？ Yes
+样例
+给定图:
+
+A------B  C
+ \     |  | 
+  \    |  |
+   \   |  |
+    \  |  |
+      D   E
+返回 {A,B,D}, {C,E}。其中有 2 个相连的元素，即{A,B,D}, {C,E}
+
+/**
+ * Definition for Undirected graph.
+ * struct UndirectedGraphNode {
+ *     int label;
+ *     vector<UndirectedGraphNode *> neighbors;
+ *     UndirectedGraphNode(int x) : label(x) {};
+ * };
+ */
+class Solution {
+public:
+    /**
+     * @param nodes a array of Undirected graph node
+     * @return a connected set of a Undirected graph
+     */
+    set<int> st;
+    vector<vector<int>>vv;
+    void dfs(UndirectedGraphNode* cur, vector<int> &v){
+        v.push_back(cur->label);
+        st.insert(cur->label);
+        for(int i=0; i<cur->neighbors.size(); ++i)
+            if(st.find(cur->neighbors[i]->label) == st.end())
+                dfs(cur->neighbors[i], v);
+    }
+    vector<vector<int>> connectedSet(vector<UndirectedGraphNode*>& nodes) {
+        // Write your code here
+        for(int i=0; i<nodes.size(); ++i){
+            if(st.find(nodes[i]->label) == st.end()){
+                vector<int> v;
+                dfs(nodes[i], v);
+                sort(v.begin(), v.end());
+                vv.push_back(v);
+            }
+        }
+        return vv;
+    }
+};
