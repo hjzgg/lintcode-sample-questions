@@ -1,0 +1,50 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/merge-sorted-array/#
+
+合并排序数组 II 查看运行结果 
+
+合并两个排序的整数数组A和B变成一个新的数组。
+
+样例
+给出A = [1, 2, 3, empty, empty] B = [4,5]
+
+合并之后A将变成[1,2,3,4,5]
+
+注意
+你可以假设A具有足够的空间（A数组的大小大于或等于m+n）去添加B中的元素。
+
+class Solution {
+public:
+    /**
+     * @param A: sorted integer array A which has m elements, 
+     *           but size of A is m+n
+     * @param B: sorted integer array B which has n elements
+     * @return: void
+     */
+    int bsearch(int x[], int len, int key){
+        int ld=0, rd=len-1;
+        while(ld<=rd){
+            int mid = (ld+rd)>>1;
+            if(x[mid]>=key) rd = mid-1;
+            else ld = mid+1;
+        }
+        return rd+1;
+    }
+    void mergeSortedArray(int A[], int m, int B[], int n) {
+        // write your code here
+        for(int i=0; i<n; ++i){
+            //自己的二分查找
+            //int k = bsearch(A, m, B[i]);
+            
+            //利用lower_bound() 或者 upper_bound();
+            int k = lower_bound(A, A+m, B[i]) - A;
+            if(k==m)
+                A[m] = B[i];
+            else {
+                for(int j=m-1; j>=k; --j)
+                    A[j+1] = A[j];
+                A[k] = B[i];
+            }
+            ++m;
+        }
+    }
+};
