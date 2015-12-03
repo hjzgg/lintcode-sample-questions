@@ -1,0 +1,54 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/number-of-islands/
+岛屿的个数
+
+给一个01矩阵，求不同的岛屿的个数。
+
+0代表海，1代表岛，如果两个1相邻，那么这两个1属于同一个岛。我们只考虑上下左右为相邻。
+
+样例
+在矩阵：
+
+[
+  [1, 1, 0, 0, 0],
+  [0, 1, 0, 0, 1],
+  [0, 0, 0, 1, 1],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 1]
+]
+中有 3 个岛.
+
+class Solution {
+public:
+    /**
+     * @param grid a boolean 2D matrix
+     * @return an integer
+     */
+    int n, m;
+    bool vis[1000][1000];
+    int dir[4][2] = {{0,1}, {1,0}, {0,-1}, {-1,0}};
+    void dfs(vector<vector<bool>>& grid, int x, int y){
+        if(x<0 || y<0 || x>=n || y>=m) return;
+        if(vis[x][y] || !grid[x][y]) return;
+        vis[x][y] = true;
+        for(int i=0; i<4; ++i){
+            int xx = x+dir[i][0];
+            int yy = y+dir[i][1];
+            dfs(grid, xx, yy);
+        }
+    }
+    int numIslands(vector<vector<bool>>& grid) {
+        // Write your code here
+        n = grid.size();
+        if(n == 0) return 0;
+        m = grid[0].size();
+        memset(vis, false, sizeof(vis));
+        int ans = 0;
+        for(int i=0; i<n; ++i)
+            for(int j=0; j<m; ++j)
+                if(!vis[i][j] && grid[i][j]){
+                    ++ans;
+                    dfs(grid, i, j);
+                }
+        return ans;
+    }
+};
