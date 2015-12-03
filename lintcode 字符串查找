@@ -1,0 +1,67 @@
+题目链接:http://www.lintcode.com/zh-cn/problem/strstr/
+字符串查找 查看运行结果 
+
+对于一个给定的 source 字符串和一个 target 字符串，你应该在 source 字符串中找出 target 字符串出现的第一个位置(从0开始)。如果不存在，则返回 -1。
+
+您在真实的面试中是否遇到过这个题？ Yes
+样例
+如果 source = "source" 和 target = "target"，返回 -1。
+
+如果 source = "abcdabcdefg" 和 target = "bcd"，返回 1。
+
+挑战
+O(n2)的算法是可以接受的。如果你能用O(n)的算法做出来那更加好。（提示：KMP）
+
+说明
+在面试中我是否需要实现KMP算法？
+
+不需要，当这种问题出现在面试中时，面试官很可能只是想要测试一下你的基础应用能力。当然你需要先跟面试官确认清楚要怎么实现这个题。
+
+class Solution {
+public:
+    /**
+     * Returns a index to the first occurrence of target in source,
+     * or -1  if target is not part of source.
+     * @param source string to be scanned.
+     * @param target string containing the sequence of characters to match.
+     */
+    void kmp(char *t, int next[]){
+        next[0] = -1;
+        next[1] = 0;
+        int len = strlen(t);
+        for(int i=1; i<len; ++i){
+            int j = next[i];
+            while(j!=-1 && t[i]!=t[j]) j=next[j];
+            next[i+1] = j==-1 ? 0 : j+1;
+            //或者
+            if(t[i+1] == t[j+1])            
+                next[i+1] = next[j+1];
+        }
+    }
+    int strStr(const char *s, const char *t) {
+        // write your code here
+        
+        //O(n*n)的算法
+        // if(!source || !target) return -1;
+        // char *p = strstr((char *)source, (char *)target);
+        // if(p) return p-source;
+        
+        //kmp算法
+        if(!s || !t) return -1;
+        int next[strlen(t)+1];
+        int lens = strlen(s), lent = strlen(t);
+        if(lent == 0) return 0; 
+        kmp((char *)t, next);
+        for(int i=0, j=0; i<lens;){
+            if(j==-1 || s[i]==t[j]){
+                ++i;
+                ++j;
+                if(j==lent) return i-lent;
+            } else {
+                j = next[j];
+            }
+        }
+        return -1;
+    }
+};
+
