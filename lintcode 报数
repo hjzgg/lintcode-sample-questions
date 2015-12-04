@@ -1,0 +1,55 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/count-and-say/
+报数 查看运行结果 
+
+报数指的是，按照其中的整数的顺序进行报数，然后得到下一个数。如下所示：
+
+1, 11, 21, 1211, 111221, ...
+
+1 读作 "one 1" -> 11.
+
+11 读作 "two 1s" -> 21.
+
+21 读作 "one 2, then one 1" -> 1211.
+
+给定一个整数 n, 返回 第 n 个顺序。
+
+样例
+给定 n = 5, 返回 "111221".
+
+注意
+整数的顺序将表示为一个字符串。
+
+class Solution {
+public:
+    /**
+     * @param n the nth
+     * @return the nth sequence
+     */
+    template<typename out_type, typename in_value>
+    out_type convert(const in_value &t){
+        stringstream stream;
+        stream << t;
+        out_type result;
+        stream>>result;
+        return result;
+    }
+    string countAndSay(int n) {
+        // Write your code here
+        string ans = "1";
+        if(n==1) return ans;
+        while(--n){
+            string tmp="";
+            int cnt = 1;
+            for(int i=1; i<ans.size(); ++i){
+                if(ans[i] == ans[i-1]) ++cnt;
+                else {
+                    tmp += convert<string>(cnt)+ans[i-1];
+                    cnt = 1;
+                }
+            }
+            tmp += convert<string>(cnt)+ans[ans.size()-1];
+            ans = tmp;
+        }
+        return ans;
+    }
+};
