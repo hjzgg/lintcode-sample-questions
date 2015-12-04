@@ -1,0 +1,29 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/reverse-integer/
+颠倒整数
+
+将一个整数中的数字进行颠倒，当颠倒后的整数溢出时，返回 0 (标记为 32 位整数)。
+
+样例
+给定 x = 123，返回 321
+
+给定 x = -123，返回 -321
+
+class Solution {
+public:
+    /**
+     * @param n the integer to be reversed
+     * @return the reversed integer
+     */
+    int reverseInteger(int n) {
+        // Write your code here
+        
+        int m = abs(n);
+        long long ans = 0;
+        while(m){
+            ans = ans*10+m%10;
+            m/=10;
+        }
+        if(ans > (1<<31)-1) return 0;
+        return n<0 ? -ans : ans;
+    }
+};
