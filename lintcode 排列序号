@@ -1,0 +1,50 @@
+详解：http://www.cnblogs.com/hujunzheng/p/5020211.html
+
+题目链接:http://www.lintcode.com/zh-cn/problem/permutation-index/#
+排列序号
+
+给出一个不含重复数字的排列，求这些数字的所有排列按字典序排序后该排列的编号。其中，编号从1开始。
+
+样例
+例如，排列[1,2,4]是第1个排列。
+class Solution {
+public:
+    /**
+     * @param A an integer array
+     * @return a long integer
+     */
+    long long permutationIndex(vector<int>& A) {
+        // Write your code here
+        
+        //阿欧，知道会超时，试一试还真tm超时
+        // vector<int> permu(A.begin(), A.end());
+        // sort(permu.begin(), permu.end());
+        // int cnt = 0;
+        // do{
+        //     int i;
+        //     for(i=0; i<A.size(); ++i)
+        //         if(A[i]!=permu[i])
+        //             break;
+        //     ++cnt;
+        //     if(i>=A.size()) break;
+        // }while(next_permutation(permu.begin(), permu.end()));
+        // return cnt;
+        
+        
+        vector<int> a;
+        int len = A.size();
+        int cnt[len];
+        cnt[len-1] = 0;
+        a.push_back(A[len-1]);
+        for(int i=len-2; i>=0; --i){//统计每个数后面有多少个比它小的数的个数
+            vector<int>::iterator it = lower_bound(a.begin(), a.end(), A[i]);
+            cnt[i] = it-a.begin();
+            a.insert(it, A[i]);
+        }
+        
+        long long ans=1, fac=1, c=1;
+        for(int i=len-2; i>=0; --i)
+            ans += (fac*=c++)*cnt[i];
+        return ans;
+    }
+};
