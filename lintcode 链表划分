@@ -1,0 +1,56 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/partition-list/
+链表划分 查看运行结果 
+
+给定一个单链表和数值x，划分链表使得所有小于x的节点排在大于等于x的节点之前。
+
+你应该保留两部分内链表节点原有的相对顺序。
+
+
+
+您在真实的面试中是否遇到过这个题？ Yes
+样例
+给定链表 1->4->3->2->5->2->null，并且 x=3
+
+返回 1->2->2->4->3->5->null
+
+/**
+ * Definition of ListNode
+ * class ListNode {
+ * public:
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int val) {
+ *         this->val = val;
+ *         this->next = NULL;
+ *     }
+ * }
+ */
+class Solution {
+public:
+    /**
+     * @param head: The first node of linked list.
+     * @param x: an integer
+     * @return: a ListNode 
+     */
+    ListNode *partition(ListNode *head, int x) {
+        // write your code here
+        ListNode *hL = new ListNode(-1), *pL=hL;
+        ListNode *hR = new ListNode(-1), *pR=hR;
+        while(head){
+            if(head->val < x){
+                pL->next = head;
+                pL = pL->next;
+            } else {
+                pR->next = head;
+                pR = pR->next;
+            }
+            head = head->next;
+        }
+        pR->next = NULL;//末尾节点next的指向一定是NULL
+        pL->next = hR->next;
+        return hL->next;
+    }
+};
+
+
+
