@@ -1,0 +1,44 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/climbing-stairs/
+爬楼梯 查看运行结果 
+
+假设你正在爬楼梯，需要n步你才能到达顶部。但每次你只能爬一步或者两步，你能有多少种不同的方法爬到楼顶部？
+
+您在真实的面试中是否遇到过这个题？ Yes
+样例
+比如n=3，1+1+1=1+2=2+1=3，共有3中不同的方法
+
+返回 3
+
+class Solution {
+public:
+    /**
+     * @param n: An integer
+     * @return: An integer
+     */
+    int ans = 0;
+    void dfs(int cnt, int n){
+        if(cnt >= n){
+            if(cnt == n)
+                ++ans;
+            return;
+        }
+        dfs(cnt+1, n);
+        dfs(cnt+2, n);
+    }
+    int climbStairs(int n) {
+        // write your code here
+        
+        //暴力枚举, 超时哦
+        //dfs(0, n);
+        
+        //dp
+        int f[n+1];
+        f[0] = 1;
+        f[1] = 1;
+        f[2] = 2;
+        for(int i=3; i<=n; ++i)
+            f[i] = f[i-1]+f[i-2];
+        return f[n];
+    }
+};
+
