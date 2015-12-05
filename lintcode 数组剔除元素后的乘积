@@ -1,0 +1,41 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/product-of-array-exclude-itself/
+数组剔除元素后的乘积 查看运行结果 
+
+给定一个整数数组A。
+
+定义B[i] = A[0] * ... * A[i-1] * A[i+1] * ... * A[n-1]， 计算B的时候请不要使用除法。
+
+样例
+给出A=[1, 2, 3]，返回 B为[6, 3, 2]
+
+class Solution {
+public:
+    /**
+     * @param A: Given an integers array A
+     * @return: A long long array B and B[i]= A[0] * ... * A[i-1] * A[i+1] * ... * A[n-1]
+     */
+    vector<long long> productExcludeItself(vector<int> &nums) {
+        // write your code here
+        
+        vector<long long> v;
+        if(nums.size()==0) return v;
+        if(nums.size()==1){
+            v.push_back(1);
+            return v;
+        }
+        int n = nums.size();
+        long long pre[n], suf[n];//分别表示的是前缀乘积和后缀乘积
+        pre[0] = nums[0];
+        suf[n-1] = nums[n-1];
+        for(int i=1; i<n; ++i)
+            pre[i] = pre[i-1]*nums[i];
+        for(int i=n-2; i>=0; --i)
+            suf[i] = suf[i+1]*nums[i];
+            
+        v.push_back(suf[1]);
+        for(int i=1; i<n-1; ++i)
+            v.push_back(pre[i-1]*suf[i+1]);
+        v.push_back(pre[n-2]);
+        return v;
+    }
+};
