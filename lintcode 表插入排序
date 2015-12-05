@@ -1,0 +1,54 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/insertion-sort-list/
+表插入排序 查看运行结果 
+
+用插入排序对链表排序
+
+样例
+Given 1->3->2->0->null, return 0->1->2->3->null
+
+/**
+ * Definition of ListNode
+ * class ListNode {
+ * public:
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int val) {
+ *         this->val = val;
+ *         this->next = NULL;
+ *     }
+ * }
+ */
+class Solution {
+public:
+    /**
+     * @param head: The first node of linked list.
+     * @return: The head of linked list.
+     */
+    ListNode *insertionSortList(ListNode *head) {
+        // write your code here
+        if(head == NULL)    return head;
+        ListNode *h = new ListNode(0);
+        h->next = head;
+        ListNode *p = head->next;
+        head->next = NULL;//第一个节点编程末尾的元素
+        while(p){
+            ListNode *q = p->next, *pre=h, *hh=h->next;
+            while(hh){
+                if(hh->val > p->val)
+                    break;
+                pre = hh;
+                hh = hh->next;
+            }
+            if(!hh){//放在末尾
+                pre->next = p;
+                p->next = NULL;
+            }
+            else {
+                p->next = hh;
+                pre->next = p;
+            }
+            p = q;
+        }
+        return h->next;
+    }
+};
