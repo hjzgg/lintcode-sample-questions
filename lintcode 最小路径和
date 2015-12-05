@@ -1,0 +1,37 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/minimum-path-sum/
+最小路径和 查看运行结果 
+
+给定一个只含非负整数的m*n网格，找到一条从左上角到右下角的可以使数字和最小的路径。
+
+样例
+注意
+你在同一时间只能向下或者向右移动一步
+
+class Solution {
+public:
+    /**
+     * @param grid: a list of lists of integers.
+     * @return: An integer, minimizes the sum of all numbers along its path
+     */
+    int minPathSum(vector<vector<int> > &grid) {
+        // write your code here
+        int n = grid.size();
+        if(n==0) return 0;
+        int m = grid[0].size();
+        int dp[n][m];
+        for(int i=0; i<n; ++i){
+            dp[i][0] = grid[i][0];
+            if(i>0) dp[i][0] += dp[i-1][0];
+        }
+        for(int i=0; i<m; ++i){
+            dp[0][i] = grid[0][i];
+            if(i>0) dp[0][i] += dp[0][i-1];
+        }
+        
+        for(int i=1; i<n; ++i)
+            for(int j=1; j<m; ++j)
+                dp[i][j] = min(dp[i-1][j], dp[i][j-1])+grid[i][j];
+        return dp[n-1][m-1];
+    }
+};
+
