@@ -1,0 +1,37 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/valid-palindrome/
+有效回文串 查看运行结果 
+
+给定一个字符串，判断其是否为一个回文串。只包含字母和数字，忽略大小写。
+
+您在真实的面试中是否遇到过这个题？ Yes
+样例
+"A man, a plan, a canal: Panama" 是一个回文。
+
+"race a car" 不是一个回文。
+
+注意
+你是否考虑过，字符串有可能是空字符串？这是面试过程中，面试官常常会问的问题。
+
+在这个题目中，我们将空字符串判定为有效回文。
+
+挑战
+O(n) 时间复杂度，且不占用额外空间。
+
+class Solution {
+public:
+    /**
+     * @param s A string
+     * @return Whether the string is a valid palindrome
+     */
+    bool isPalindrome(string& s) {
+        // Write your code here
+        if(s=="") return true;
+        for(int i=0, j=s.size()-1; i<j; ++i, --j){
+            while(i<j && !isalnum(s[i])) ++i;
+            while(i<j && !isalnum(s[j])) --j;
+            if(!(s[i]==s[j] || s[i]+32==s[j] || s[i]-32==s[j]))
+                return false;
+        }
+        return true;
+    }
+};
