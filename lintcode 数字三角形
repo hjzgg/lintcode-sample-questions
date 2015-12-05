@@ -1,0 +1,51 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/triangle/
+数字三角形 查看运行结果 
+
+给定一个数字三角形，找到从顶部到底部的最小路径和。每一步可以移动到下面一行的相邻数字上。
+
+样例
+比如，给出下列数字三角形：
+
+[
+
+     [2],
+
+    [3,4],
+
+   [6,5,7],
+
+  [4,1,8,3]
+
+]
+
+从顶到底部的最小路径和为11 ( 2 + 3 + 5 + 1 = 11)。
+
+注意
+如果你只用额外空间复杂度O(n)的条件下完成可以获得加分，其中n是数字三角形的总行数。
+
+class Solution {
+public:
+    /**
+     * @param triangle: a list of lists of integers.
+     * @return: An integer, minimum path sum.
+     */
+    int minimumTotal(vector<vector<int> > &t) {
+        // write your code here
+        int n = t.size();
+        if(n==0) return 0;
+        int sum[n][n];
+        memset(sum, 0x3f, sizeof(sum));
+        sum[0][0] = t[0][0];
+        for(int i=1; i<n; ++i)
+            for(int j=0; j<=i; ++j){
+                if(j>0) sum[i][j] = min(sum[i-1][j-1], sum[i-1][j]) + t[i][j];
+                else sum[i][j] = sum[i-1][j] + t[i][j];
+            }
+        int ans = 0x3f3f3f3f;
+        for(int i=0; i<n; ++i)  
+            if(ans > sum[n-1][i])
+                ans = sum[n-1][i];
+        return ans;
+    }
+};
+
