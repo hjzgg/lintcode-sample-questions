@@ -1,0 +1,46 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/nth-to-last-node-in-list/
+链表倒数第n个节点 查看运行结果 
+
+找到单链表倒数第n个节点，保证链表中节点的最少数量为n。
+
+您在真实的面试中是否遇到过这个题？ Yes
+样例
+给出链表 3->2->1->5->null和n = 2，返回倒数第二个节点的值1.
+
+/**
+ * Definition of ListNode
+ * class ListNode {
+ * public:
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int val) {
+ *         this->val = val;
+ *         this->next = NULL;
+ *     }
+ * }
+ */
+class Solution {
+public:
+    /**
+     * @param head: The first node of linked list.
+     * @param n: An integer.
+     * @return: Nth to last node of a singly linked list. 
+     */
+    ListNode *nthToLast(ListNode *head, int n) {
+        // write your code here
+        int sz = 0;
+        ListNode *p = head;
+        while(p){
+            ++sz;
+            p=p->next;
+        }
+        sz -= n;
+        p = head;
+        while(sz--)
+            p = p->next;
+        return p;
+    }
+};
+
+
+
