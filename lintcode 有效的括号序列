@@ -1,0 +1,33 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/valid-parentheses/
+有效的括号序列 查看运行结果 
+
+给定一个字符串所表示的括号序列，包含以下字符： '(', ')', '{', '}', '[' and ']'， 判定是否是有效的括号序列。
+
+样例
+括号必须依照 "()" 顺序表示， "()[]{}" 是有效的括号，但 "([)]"则是无效的括号。
+
+挑战
+O(n)的时间，n为括号的个数
+class Solution {
+public:
+    /**
+     * @param s A string
+     * @return whether the string is a valid parentheses
+     */
+    bool isValidParentheses(string& s) {
+        // Write your code here
+        stack<char> st;
+        for(int i=0; i<s.size(); ++i){
+            if(s[i]=='(' || s[i]=='{' || s[i]=='[')
+                st.push(s[i]);
+            else {
+                if(st.size()  && (s[i]==')'&&st.top()=='(' || s[i]=='}'&&st.top()=='{' ||
+                   s[i]==']'&&st.top()=='['))
+                    st.pop();
+                else return false;
+            }
+        }
+        if(st.size() > 0) return false;
+        return true;
+    }
+};
