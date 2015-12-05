@@ -1,0 +1,45 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/reverse-linked-list/
+翻转链表 查看运行结果 
+
+翻转一个链表
+
+样例
+给出一个链表1->2->3->null，这个翻转后的链表为3->2->1->null
+
+挑战
+在原地一次翻转完成
+
+/**
+ * Definition of ListNode
+ * 
+ * class ListNode {
+ * public:
+ *     int val;
+ *     ListNode *next;
+ * 
+ *     ListNode(int val) {
+ *         this->val = val;
+ *         this->next = NULL;
+ *     }
+ * }
+ */
+class Solution {
+public:
+    /**
+     * @param head: The first node of linked list.
+     * @return: The new head of reversed linked list.
+     */
+    ListNode *reverse(ListNode *head) {
+        // write your code here
+        ListNode *h = new ListNode(0);//头指针
+        ListNode *p = head, *q;
+        while(p){
+            q = p->next;
+            p->next = h->next;
+            h->next = p;
+            p = q;
+        }
+        return h->next;
+    }
+};
+
