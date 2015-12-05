@@ -1,0 +1,43 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/reverse-words-in-a-string/
+翻转字符串 查看运行结果 
+
+给定一个字符串，逐个翻转字符串中的每个单词。
+
+您在真实的面试中是否遇到过这个题？ Yes
+样例
+给出s = "the sky is blue"，返回"blue is sky the"
+
+说明
+单词的构成：无空格字母构成一个单词
+输入字符串是否包括前导或者尾随空格？可以包括，但是反转后的字符不能包括
+如何处理两个单词间的多个空格？在反转字符串中间空格减少到只含一个
+
+class Solution {
+public:
+    /**
+     * @param s : A string
+     * @return : A string
+     */
+    string reverseWords(string s) {
+        // write your code here
+        
+        while(s.size() && s[0] == ' ')//清除首部的空格
+            s.erase(s.begin());
+        while(s.size() && s[s.size()-1] == ' ')//清除尾部的空格
+            s.erase(s.end()-1);
+        if(s.size() == 0) return s;
+        
+        reverse(s.begin(), s.end());//首先将整体反转，然后一个单词一个单词的反转， ok！
+        string::iterator itb = s.begin(), ite;
+        while((ite=find(itb, s.end(), ' ')) != s.end()){
+            reverse(itb, ite);
+            ++ite;
+            while(*ite == ' ')  s.erase(ite);
+            itb = ite;
+        }
+        
+        //反转最后一个单词
+        reverse(itb, s.end());
+        return s;
+    }
+};
