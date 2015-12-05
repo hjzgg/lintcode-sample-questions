@@ -1,0 +1,33 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/minimum-subarray/
+最小子数组 查看运行结果 
+
+给定一个整数数组，找到一个具有最小和的子数组。返回其最小和。
+
+您在真实的面试中是否遇到过这个题？ Yes
+样例
+给出数组[1, -1, -2, 1]，返回 -3
+
+注意
+子数组最少包含一个数字
+
+class Solution {
+public:
+    /**
+     * @param nums: a list of integers
+     * @return: A integer denote the sum of minimum subarray
+     */
+    int minSubArray(vector<int> nums) {
+        // write your code here
+        int ret = 0x3f3f3f, sum=0;
+        for(int i=0; i<nums.size(); ++i)
+            if(sum>0){
+                sum = nums[i];
+                if(ret > sum) ret = sum;
+            } else {
+                sum += nums[i];
+                if(ret > sum) ret = sum;
+            }
+        return ret;
+    }
+};
+
