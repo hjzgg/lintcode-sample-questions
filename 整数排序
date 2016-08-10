@@ -6,7 +6,7 @@
 样例
 
 对于数组 [3, 2, 1, 4, 5], 排序后为：[1, 2, 3, 4, 5]。
-
+选择排序
 public class Solution {
     /**
      * @param A an integer array
@@ -29,6 +29,7 @@ public class Solution {
     }
 }
 
+选择排序
 public class Solution {
     /**
      * @param A an integer array
@@ -43,5 +44,75 @@ public class Solution {
                     a[j] ^= a[i];
                     a[i] ^= a[j];
                 }
+    }
+}
+
+冒泡排序
+public class Solution {
+    /**
+     * @param A an integer array
+     * @return void
+     */
+    public void sortIntegers(int[] a) {
+        int len = a.length; 
+        for(int i=len-1; i>0; --i) {
+            for(int j=0; j<i; ++j) {
+                if(a[j] > a[j+1]) {
+                    a[j] ^= a[j+1];
+                    a[j+1] ^= a[j];
+                    a[j] ^= a[j+1];
+                }
+            }
+        }
+    }
+}
+
+插入排序
+public class Solution {
+    /**
+     * @param A an integer array
+     * @return void
+     */
+    public void sortIntegers(int[] a) {
+        int len = a.length; 
+        for(int i=1; i<len; ++i) {
+            int tmp = a[i];
+            int j = 0;
+            for(j=i-1; j>=0 && tmp < a[j]; --j)
+                a[j+1] = a[j];
+            a[j+1] = tmp;
+        }
+    }
+}
+
+
+二分插入排序
+public class Solution {
+    /**
+     * @param A an integer array
+     * @return void
+     */
+    public void sortIntegers(int[] a) {
+        int len = a.length; 
+        for(int i=1; i<len; ++i) {
+            int key = a[i];
+            int pos = bsearch(a, i-1, key);
+            for(int j=i; j>pos; --j)
+                a[j] = a[j-1];
+            a[pos] = key;
+        }
+    }
+    
+    private int bsearch(int[] a, int len, int key) {
+        int ld = 0, rd = len;
+        while(ld <= rd) {
+            int mid = (ld+rd)>>1;
+            if(a[mid] <= key) {
+                ld = mid+1;
+            } else {
+                rd = mid-1;
+            }
+        }
+        return rd+1;
     }
 }
