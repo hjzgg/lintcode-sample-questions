@@ -1,0 +1,26 @@
+
+
+
+给一组整数，按照升序排序，使用选择排序，冒泡排序，插入排序或者任何 O(n2) 的排序算法。
+您在真实的面试中是否遇到过这个题？
+样例
+
+对于数组 [3, 2, 1, 4, 5], 排序后为：[1, 2, 3, 4, 5]。
+
+
+public class Solution {
+    /**
+     * @param A an integer array
+     * @return void
+     */
+    public void sortIntegers(int[] a) {
+        int len = a.length; 
+        for(int i=0; i<len-1; ++i)
+            for(int j=i+1; j<len; ++j)
+                if(a[i] > a[j]) {
+                    a[i] ^= a[j];
+                    a[j] ^= a[i];
+                    a[i] ^= a[j];
+                }
+    }
+}
