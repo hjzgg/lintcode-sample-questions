@@ -7,6 +7,27 @@
 
 对于数组 [3, 2, 1, 4, 5], 排序后为：[1, 2, 3, 4, 5]。
 
+public class Solution {
+    /**
+     * @param A an integer array
+     * @return void
+     */
+    public void sortIntegers(int[] a) {
+        int len = a.length; 
+        for(int i=0; i<len-1; ++i) {
+            int p = i;
+            for(int j=i+1; j<len; ++j) 
+                if(a[p] > a[j]) {
+                    p = j;
+                }
+            if(p != i) {
+                a[i] ^= a[p];
+                a[p] ^= a[i];
+                a[i] ^= a[p];
+            }
+        }
+    }
+}
 
 public class Solution {
     /**
