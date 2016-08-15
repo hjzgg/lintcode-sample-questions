@@ -1,0 +1,130 @@
+
+
+返回两个数组的交
+您在真实的面试中是否遇到过这个题？
+样例
+
+nums1 = [1, 2, 2, 1], nums2 = [2, 2], 返回 [2].
+挑战
+
+可以用三种不同的方法实现吗？
+
+
+方法一：纯暴力
+public class Solution {
+    /**
+     * @param nums1 an integer array
+     * @param nums2 an integer array
+     * @return an integer array
+     */
+    public int[] intersection(int[] a, int[] b) {
+        // Write your code here
+        boolean [] vis = new boolean[b.length];
+        List<Integer> ans = new ArrayList<Integer>();
+        for(int i=0; i<a.length; ++i){
+            boolean find = false;
+            for(int j=0; j<b.length; ++j) {
+                if(find) {
+                    if(b[j] == a[i]) vis[j] = true;
+                } else {
+                    if(a[i] == b[j] && !vis[j]) {
+                        ans.add(a[i]);
+                        vis[j] = true;
+                        find = true;
+                    }
+                }
+            }
+        }
+        
+        int[] ret = new int[ans.size()];
+        for(int i=0; i<ret.length; ++i)
+            ret[i] = ans.get(i);
+        return ret;
+    }
+}
+
+方法2：哈希
+public class Solution {
+    /**
+     * @param nums1 an integer array
+     * @param nums2 an integer array
+     * @return an integer array
+     */
+    public int[] intersection(int[] a, int[] b) {
+        // Write your code here
+        if(a.length < b.length) {
+            int[] tmp = a;
+            a = b;
+            b = tmp;
+        }
+        Set<Integer> set = new HashSet<Integer>();
+        List<Integer> ans = new ArrayList<Integer>();
+        for(int aa : a)
+            set.add(aa);
+        for(int bb : b) {
+            if(set.contains(bb)) {
+                ans.add(bb);
+                set.remove(bb);
+            }
+        }
+        
+        int[] ret = new int[ans.size()];
+        for(int i=0; i<ret.length; ++i)
+            ret[i] = ans.get(i);
+        return ret;
+    }
+}
+
+//方法3：二分查找 + hash
+public class Solution {
+    /**
+     * @param nums1 an integer array
+     * @param nums2 an integer array
+     * @return an integer array
+     */
+    public int[] intersection(int[] a, int[] b) {
+        // Write your code here
+        Arrays.sort(a);
+        vis = new boolean[a.length];
+        Set<Integer> ans = new HashSet<Integer>();
+        for(int k : b){
+            int pos = bsearch(a, k);
+            if(pos>=0 && pos<a.length && !vis[pos] && a[pos]==k) {
+                vis[pos] = true;
+                ans.add(k);
+            }
+        }
+        
+        int[] ret = new int[ans.size()];
+        int p = 0;
+        for(int k : ans) {
+            ret[p++] = k;
+        }
+        return ret;
+    }
+    
+    private boolean[] vis = null;
+ 
+    private int bsearch(int a[], int k){
+        int ld = 0, rd = a.length-1;
+        while(ld <= rd) {
+            int mid = (ld+rd) >> 1;
+            if(!vis[mid]) {
+                if(a[mid] >= k) 
+                    rd = mid-1;
+                else 
+                    ld = mid+1;
+            } else {
+                if(a[mid] == k)
+                    ld = mid+1;
+                else {
+                    if(a[mid] >= k) 
+                        rd = mid-1;
+                    else 
+                        ld = mid+1;
+                }
+            }
+        }
+        return rd+1;
+    }   
+}
