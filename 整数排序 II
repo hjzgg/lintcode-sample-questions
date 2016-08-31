@@ -1,0 +1,96 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/sort-integers-ii/
+
+给一组整数，按照升序排序。使用归并排序，快速排序，堆排序或者任何其他 O(n log n) 的排序算法。
+样例
+
+给出 [3, 2, 1, 4, 5], 排序后的结果为 [1, 2, 3, 4, 5]。
+
+
+//快速排序1
+public class Solution {
+    /**
+     * @param A an integer array
+     * @return void
+     */
+    public void sortIntegers2(int[] A) {
+        qsort(A, 0, A.length-1);
+    }
+    
+    //快速排序
+    private void swap(int[] a, int i, int j) {
+        int tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
+    }
+    private void qsort(int[] a, int ld, int rd){
+        if(ld >= rd) return;
+        int mid = (ld+rd)/2;
+        if( (a[mid] - a[ld]) * (a[mid] - a[rd]) < 0 ) {
+            swap(a, ld, mid);
+        }
+        if( (a[rd] - a[mid]) * (a[rd] - a[ld]) < 0 ) {
+           swap(a, ld, rd);
+        }
+        
+        int piv = a[ld];
+        int pk = ld;
+        for(int i=ld, j=ld+1; j <= rd; ++j) {
+            if(a[j] < piv) {
+                if(a[i] == piv) pk = j;
+                swap(a, i, j);
+                ++i;    
+            }
+            if(j == rd) {
+                swap(a, i, pk);
+                mid = i;
+            }
+        }
+        
+        qsort(a, ld, mid-1);
+        qsort(a, mid+1, rd);
+    }
+}
+
+//快速排序2
+public class Solution {
+    /**
+     * @param A an integer array
+     * @return void
+     */
+    public void sortIntegers2(int[] A) {
+        qsort(A, 0, A.length-1);
+    }
+    
+    //快速排序
+    private void swap(int[] a, int i, int j) {
+        a[i] ^= a[j];
+        a[j] ^= a[i];
+        a[i] ^= a[j];
+    }
+    private void qsort(int[] a, int ld, int rd){
+        if(ld >= rd) return;
+        int mid = (ld+rd)/2;
+        if( (a[mid] - a[ld]) * (a[mid] - a[rd]) < 0 ) {
+            swap(a, ld, mid);
+        }
+        if( (a[rd] - a[mid]) * (a[rd] - a[ld]) < 0 ) {
+           swap(a, ld, rd);
+        }
+        
+        int piv = a[ld];
+        
+        int lr = ld, rr = rd;
+        
+        while(lr < rr) {
+            while(lr < rr && a[rr] >= piv) --rr;
+            a[lr] = a[rr];
+            while(lr < rr && a[lr] <= piv) ++lr;
+            a[rr] = a[lr];
+        }
+        mid = lr;
+        a[mid] = piv;
+        
+        qsort(a, ld, mid-1);
+        qsort(a, mid+1, rd);
+    }
+}
