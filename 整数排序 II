@@ -127,3 +127,52 @@ public class Solution {
         System.arraycopy(aa, 0, a, ld, aa.length);
     }
 }
+
+//堆排序
+public class Solution {
+    /**
+     * @param A an integer array
+     * @return void
+     */
+    public void sortIntegers2(int[] A) {
+        heap(A);
+    }
+    
+    private void adjust(int o, int[] a, int len){
+        int ov = a[o-1];
+        while(o <= len) {
+            int cv = ov;
+            int no = o;
+            if(o*2 <= len && a[2*o-1] < cv) {
+                no = 2*o;
+                cv = a[2*o-1];
+            }
+            
+            if(o*2+1 <= len && a[2*o] < cv) {
+                no = 2*o+1;
+                cv = a[2*o];
+            }
+            if(no != o) {
+                a[o-1] = cv;
+                o = no;
+            } else {
+                a[o-1] = ov;
+                break;
+            }
+        }
+    }
+    
+    private void heap(int[] a){
+        int[] aa = new int[a.length];
+        System.arraycopy(a, 0, aa, 0, a.length);
+        
+        for(int i=a.length/2; i>=1; --i)
+            adjust(i, aa, aa.length);
+        
+        for(int i=1; i<=aa.length; ++i) {
+            a[i-1] = aa[0];
+            aa[0] = aa[aa.length-i];
+            adjust(1, aa, aa.length-i);
+        }
+    }
+}
