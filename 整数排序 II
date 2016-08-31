@@ -94,3 +94,36 @@ public class Solution {
         qsort(a, mid+1, rd);
     }
 }
+
+//归并排序
+public class Solution {
+    /**
+     * @param A an integer array
+     * @return void
+     */
+    public void sortIntegers2(int[] A) {
+        merge(A, 0, A.length-1);
+    }
+    
+    private void merge(int[] a, int ld, int rd){
+        if(ld >= rd) return;
+        int mid = (ld+rd)/2;
+        merge(a, ld, mid);
+        merge(a, mid+1, rd);
+        
+        int i, j, k=0;
+        int[] aa = new int[rd-ld+1];
+        for(i=ld, j=mid+1; i<=mid && j<=rd; ) {
+            if(a[i] < a[j]) {
+                aa[k++] = a[i++];
+            } else {
+                aa[k++] = a[j++];
+            }
+        }
+        
+        while(i<=mid) aa[k++] = a[i++];
+        while(j<=rd) aa[k++] = a[j++];
+        
+        System.arraycopy(aa, 0, a, ld, aa.length);
+    }
+}
