@@ -1,0 +1,56 @@
+题目链接：http://www.lintcode.com/zh-cn/problem/word-count-map-reduce/#
+
+使用 map reduce 来计算单词频率
+https://hadoop.apache.org/docs/r1.2.1/mapred_tutorial.html#Example%3A+WordCount+v1.0
+您在真实的面试中是否遇到过这个题？
+样例
+
+chunk1: "Google Bye GoodBye Hadoop code"
+chunk2: "lintcode code Bye"
+
+
+Get MapReduce result:
+    Bye: 2
+    GoodBye: 1
+    Google: 1
+    Hadoop: 1
+    code: 2
+    lintcode: 1
+
+
+
+/**
+ * Definition of OutputCollector:
+ * class OutputCollector<K, V> {
+ *     public void collect(K key, V value);
+ *         // Adds a key/value pair to the output buffer
+ * }
+ */
+public class WordCount {
+
+    public static class Map {
+        public void map(String key, String value, OutputCollector<String, Integer> output) {
+            // Write your code here
+            // Output the results into output buffer.
+            // Ps. output.collect(String key, int value);
+            StringTokenizer st = new StringTokenizer(value);
+            while(st.hasMoreTokens()) {
+                output.collect(st.nextToken(), 1);
+            }
+        }
+    }
+
+    public static class Reduce {
+        public void reduce(String key, Iterator<Integer> values,
+                           OutputCollector<String, Integer> output) {
+            // Write your code here
+            // Output the results into output buffer.
+            // Ps. output.collect(String key, int value);
+            int sum = 0;
+            while(values.hasNext()) {
+                sum += values.next();
+            }
+            output.collect(key, sum);
+        }
+    }
+}
