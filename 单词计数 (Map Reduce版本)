@@ -1,5 +1,9 @@
 题目链接：http://www.lintcode.com/zh-cn/problem/word-count-map-reduce/#
 
+知识点：
+    1. java mapreduce, http://blog.sina.com.cn/s/blog_5f54f0be0101f6sj.html
+    2. java StringTokenizer, http://blog.csdn.net/wenqisun/article/details/7442445
+
 使用 map reduce 来计算单词频率
 https://hadoop.apache.org/docs/r1.2.1/mapred_tutorial.html#Example%3A+WordCount+v1.0
 您在真实的面试中是否遇到过这个题？
